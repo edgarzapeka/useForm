@@ -3,7 +3,10 @@ import { render } from 'react-dom'
 
 import useForm from '../../src'
 
-const initialState = { name: '', bio: '' }
+const initialState = [...Array(65).fill(0)].reduce((acc, _, idx) => {
+  acc[`name${idx}`] = ''
+  return acc
+}, { bio: '', name: '' })// { name: '', bio: '' }
 
 function Demo () {
   const middleware = [
@@ -15,6 +18,7 @@ function Demo () {
   const listeners = {
     name: [
       ({ type, value }) => {
+        console.log(`type`, type)
         if (type === 'blur') {
           console.log(`this will only be shown on name#blur`)
         }
@@ -26,8 +30,9 @@ function Demo () {
   return (
     <form ref={form}>
       {JSON.stringify(values)}
-      <input type='text' name='name' value={values.name} />
-      <input type='text' name='bio' value={values.bio} />
+      <input type='text' name='name' />
+      {[...Array(65).fill(0)].map((_, idx) => (<input key={idx} type='text' name={`name${idx}`} />))}
+      <input type='text' name='bio' />
     </form>
   )
 }

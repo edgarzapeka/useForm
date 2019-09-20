@@ -16,7 +16,6 @@ const reducer = (state, action) => {
         }
       }
     case SUBMIT:
-      console.log(action.payload, `submit`)
       return {
         ...state,
         values: action.payload
@@ -75,7 +74,6 @@ function useForm (
         dispatch({ type: SUBMIT, payload: values })
         return values
       } catch (error) {
-        console.log(`error`, error)
         dispatch({ type: ERROR, payload: error })
         return error
       }
@@ -86,9 +84,6 @@ function useForm (
 
   const onInputChange = useCallback(evt => {
     const { name, value } = evt.target
-    if (value !== state.values[name]) {
-      return undefined
-    }
     const payload = { name, value }
     const hasListeners = listeners[name] && listeners[name].length > 0
 
